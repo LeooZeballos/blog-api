@@ -6,8 +6,10 @@ import com.leozeballos.apirestspringboot.entity.Role;
 import com.leozeballos.apirestspringboot.entity.User;
 import com.leozeballos.apirestspringboot.repository.RoleRepository;
 import com.leozeballos.apirestspringboot.repository.UserRepository;
+import com.leozeballos.apirestspringboot.security.JWTAuthResponseDTO;
+import com.leozeballos.apirestspringboot.security.JwtTokenProvider;
 import com.leozeballos.apirestspringboot.utility.AppConstants;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,28 +27,22 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/api/" + AppConstants.API_VERSION + "/auth")
+@AllArgsConstructor
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
-
-    @Autowired
-    public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository,
-                          RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
-        this.authenticationManager = authenticationManager;
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
+    private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("/login")
-    public ResponseEntity<String> authenticateUser(@RequestBody LoginDTO loginDTO) {
+    public ResponseEntity<JWTAuthResponseDTO> authenticateUser(@RequestBody LoginDTO loginDTO) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginDTO.getUsernameOrEmail(), loginDTO.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return new ResponseEntity<>("User is logged in", HttpStatus.OK);
+        String jwt = jwtTokenProvider.generateToken(authentication);
+        return ResponseEntity.ok(new JWTAuthResponseDTO(jwt));
     }
 
     @PostMapping("/register")
