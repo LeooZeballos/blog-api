@@ -1,10 +1,15 @@
 package com.leozeballos.apirestspringboot.service;
 
 import com.leozeballos.apirestspringboot.dto.EntryDTO;
+import com.leozeballos.apirestspringboot.dto.EntryResponse;
 import com.leozeballos.apirestspringboot.entity.Entry;
 import com.leozeballos.apirestspringboot.exception.ResourceNotFoundException;
 import com.leozeballos.apirestspringboot.repository.EntryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,9 +51,20 @@ public class EntryServiceImpl implements EntryService {
     }
 
     @Override
-    public List<EntryDTO> getAllEntries() {
-        List<Entry> responseEntries = entryRepository.findAll();
-        return responseEntries.stream().map(this::mapEntryToDTO).collect(Collectors.toList());
+    public EntryResponse getAllEntries(int pageNumber, int pageSize, String sortBy, String sortDir) {
+        Sort sort = sortDir.equalsIgnoreCase("ASC") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+        Page<Entry> entries = entryRepository.findAll(pageable);
+        List<Entry> entryList = entries.getContent();
+        List<EntryDTO> content = entryList.stream().map(this::mapEntryToDTO).toList();
+        EntryResponse entryResponse = new EntryResponse();
+        entryResponse.setContent(content);
+        entryResponse.setPageNumber(entries.getNumber());
+        entryResponse.setPageSize(entries.getSize());
+        entryResponse.setTotalEntries(entries.getTotalElements());
+        entryResponse.setTotalPages(entries.getTotalPages());
+        entryResponse.setHasNext(entries.hasNext());
+        return entryResponse;
     }
 
     @Override

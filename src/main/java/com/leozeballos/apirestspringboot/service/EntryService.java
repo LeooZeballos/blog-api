@@ -1,13 +1,14 @@
 package com.leozeballos.apirestspringboot.service;
 
 import com.leozeballos.apirestspringboot.dto.EntryDTO;
+import com.leozeballos.apirestspringboot.dto.EntryResponse;
 
 import java.util.List;
 
 public interface EntryService {
-    public EntryDTO newEntry(EntryDTO entryDTO);
-    public List<EntryDTO> getAllEntries();
-    public EntryDTO getEntryById(Long id);
-    public EntryDTO updateEntry(EntryDTO entryDTO, Long id);
-    public void deleteEntry(Long id);
+    EntryDTO newEntry(EntryDTO entryDTO);
+    EntryResponse getAllEntries(int pageNumber, int pageSize, String sortBy, String sortDir);
+    EntryDTO getEntryById(Long id);
+    EntryDTO updateEntry(EntryDTO entryDTO, Long id);
+    void deleteEntry(Long id);
 }
