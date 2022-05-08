@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/" + AppConstants.API_VERSION + "/entries")
 public class EntryController {
@@ -35,12 +37,12 @@ public class EntryController {
     }
 
     @PostMapping
-    public ResponseEntity<EntryDTO> saveEntity(@RequestBody EntryDTO entryDTO) {
+    public ResponseEntity<EntryDTO> saveEntity(@Valid @RequestBody EntryDTO entryDTO) {
         return new ResponseEntity<>(entryService.newEntry(entryDTO), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EntryDTO> updateEntry(@RequestBody EntryDTO entryDTO, @PathVariable(name = "id") Long id) {
+    public ResponseEntity<EntryDTO> updateEntry(@Valid @RequestBody EntryDTO entryDTO, @PathVariable(name = "id") Long id) {
         EntryDTO responseEntry = entryService.updateEntry(entryDTO, id);
         return new ResponseEntity<>(responseEntry, HttpStatus.OK);
     }
