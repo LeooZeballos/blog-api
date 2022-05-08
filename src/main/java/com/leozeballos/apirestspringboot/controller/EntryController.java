@@ -7,6 +7,7 @@ import com.leozeballos.apirestspringboot.utility.AppConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -36,17 +37,20 @@ public class EntryController {
         return ResponseEntity.ok(entryService.getEntryById(id));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public ResponseEntity<EntryDTO> saveEntity(@Valid @RequestBody EntryDTO entryDTO) {
+    public ResponseEntity<EntryDTO> saveEntry(@Valid @RequestBody EntryDTO entryDTO) {
         return new ResponseEntity<>(entryService.newEntry(entryDTO), HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<EntryDTO> updateEntry(@Valid @RequestBody EntryDTO entryDTO, @PathVariable(name = "id") Long id) {
         EntryDTO responseEntry = entryService.updateEntry(entryDTO, id);
         return new ResponseEntity<>(responseEntry, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteEntry(@PathVariable(name = "id") Long id) {
         entryService.deleteEntry(id);
