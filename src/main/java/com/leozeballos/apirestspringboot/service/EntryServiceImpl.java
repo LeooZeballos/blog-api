@@ -5,6 +5,7 @@ import com.leozeballos.apirestspringboot.dto.EntryResponse;
 import com.leozeballos.apirestspringboot.entity.Entry;
 import com.leozeballos.apirestspringboot.exception.ResourceNotFoundException;
 import com.leozeballos.apirestspringboot.repository.EntryRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,34 +14,25 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class EntryServiceImpl implements EntryService {
 
     private final EntryRepository entryRepository;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public EntryServiceImpl(EntryRepository entryRepository) {
+    public EntryServiceImpl(EntryRepository entryRepository, ModelMapper modelMapper) {
         this.entryRepository = entryRepository;
+        this.modelMapper = modelMapper;
     }
 
     private EntryDTO mapEntryToDTO(Entry entry) {
-        return EntryDTO.builder()
-                .id(entry.getId())
-                .title(entry.getTitle())
-                .description(entry.getDescription())
-                .content(entry.getContent())
-                .build();
+        return modelMapper.map(entry, EntryDTO.class);
     }
 
     private Entry mapDTOtoEntry(EntryDTO entryDTO) {
-        return Entry.builder()
-                .id(entryDTO.getId())
-                .title(entryDTO.getTitle())
-                .description(entryDTO.getDescription())
-                .content(entryDTO.getContent())
-                .build();
+        return modelMapper.map(entryDTO, Entry.class);
     }
 
     @Override

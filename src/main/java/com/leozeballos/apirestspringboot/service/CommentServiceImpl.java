@@ -7,6 +7,7 @@ import com.leozeballos.apirestspringboot.exception.BlogAppException;
 import com.leozeballos.apirestspringboot.exception.ResourceNotFoundException;
 import com.leozeballos.apirestspringboot.repository.CommentRepository;
 import com.leozeballos.apirestspringboot.repository.EntryRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -19,29 +20,21 @@ public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
     private final EntryRepository entryRepository;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public CommentServiceImpl(CommentRepository commentRepository, EntryRepository entryRepository) {
+    public CommentServiceImpl(CommentRepository commentRepository, EntryRepository entryRepository, ModelMapper modelMapper) {
         this.commentRepository = commentRepository;
         this.entryRepository = entryRepository;
+        this.modelMapper = modelMapper;
     }
 
     private CommentDTO mapCommentToDTO(Comment comment) {
-        return CommentDTO.builder()
-                .id(comment.getId())
-                .comment(comment.getComment())
-                .title(comment.getTitle())
-                .email(comment.getEmail())
-                .build();
+        return modelMapper.map(comment, CommentDTO.class);
     }
 
     private Comment mapDTOtoComment(CommentDTO commentDTO) {
-        return Comment.builder()
-                .id(commentDTO.getId())
-                .comment(commentDTO.getComment())
-                .title(commentDTO.getTitle())
-                .email(commentDTO.getEmail())
-                .build();
+        return modelMapper.map(commentDTO, Comment.class);
     }
 
     @Override

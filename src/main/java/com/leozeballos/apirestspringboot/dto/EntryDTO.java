@@ -1,6 +1,9 @@
 package com.leozeballos.apirestspringboot.dto;
 
+import com.leozeballos.apirestspringboot.entity.Comment;
 import lombok.*;
+
+import java.util.Set;
 
 @Getter
 @Setter
@@ -13,5 +16,6 @@ public class EntryDTO {
     private String title;
     private String description;
     private String content;
+    private Set<Comment> comments;
 
 }

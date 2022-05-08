@@ -1,5 +1,6 @@
 package com.leozeballos.apirestspringboot.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -26,6 +27,7 @@ public class Entry {
     @Column(name="content", nullable = false)
     private String content;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "entry", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Comment> comments = new HashSet<>();
 
