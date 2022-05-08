@@ -7,4 +7,6 @@ public class AppConstants {
     public static final String DEFAULT_SORT_BY = "id";
     public static final String DEFAULT_SORT_DIR = "ASC";
 
+    public static final String API_VERSION = "v1";
+
 }

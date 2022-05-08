@@ -26,21 +26,21 @@ public class EntryServiceImpl implements EntryService {
     }
 
     private EntryDTO mapEntryToDTO(Entry entry) {
-        EntryDTO responseEntry = new EntryDTO();
-        responseEntry.setId(entry.getId());
-        responseEntry.setTitle(entry.getTitle());
-        responseEntry.setDescription(entry.getDescription());
-        responseEntry.setContent(entry.getContent());
-        return responseEntry;
+        return EntryDTO.builder()
+                .id(entry.getId())
+                .title(entry.getTitle())
+                .description(entry.getDescription())
+                .content(entry.getContent())
+                .build();
     }
 
     private Entry mapDTOtoEntry(EntryDTO entryDTO) {
-        Entry entry = new Entry();
-        entry.setId(entryDTO.getId());
-        entry.setTitle(entryDTO.getTitle());
-        entry.setDescription(entryDTO.getDescription());
-        entry.setContent(entryDTO.getContent());
-        return entry;
+        return Entry.builder()
+                .id(entryDTO.getId())
+                .title(entryDTO.getTitle())
+                .description(entryDTO.getDescription())
+                .content(entryDTO.getContent())
+                .build();
     }
 
     @Override

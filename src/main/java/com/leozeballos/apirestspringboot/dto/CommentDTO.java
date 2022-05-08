@@ -7,11 +7,11 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class EntryDTO {
+public class CommentDTO {
 
     private Long id;
+    private String comment;
     private String title;
-    private String description;
-    private String content;
+    private String email;
 
 }

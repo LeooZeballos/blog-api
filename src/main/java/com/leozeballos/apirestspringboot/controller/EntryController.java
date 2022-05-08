@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/entries")
+@RequestMapping("/api/" + AppConstants.API_VERSION + "/entries")
 public class EntryController {
 
     private final EntryService entryService;
