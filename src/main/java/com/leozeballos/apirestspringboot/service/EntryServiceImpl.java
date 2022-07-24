@@ -48,7 +48,7 @@ public class EntryServiceImpl implements EntryService {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
         Page<Entry> entries = entryRepository.findAll(pageable);
         List<Entry> entryList = entries.getContent();
-        List<EntryDTO> content = entryList.stream().map(this::mapEntryToDTO).toList();
+        List<EntryDTO> content = entryList.stream().map(this::mapEntryToDTO).collect(java.util.stream.Collectors.toList());
         EntryResponse entryResponse = new EntryResponse();
         entryResponse.setContent(content);
         entryResponse.setPageNumber(entries.getNumber());
