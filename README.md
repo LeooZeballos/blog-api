@@ -7,9 +7,9 @@ API REST en Spring Boot con JWT, Spring Security, PostgreSQL y Data JPA
 
 # API
 ## '/api/v1/auth'
-### '/api/v1/auth/login'
+### '/login'
 POST - Login to get a bearer token. Accepts params usernameOrEmail, password.
-### '/api/v1/auth/register'
+### '/register'
 POST - Register a user. Accepts params name, username, email, password.
 
 ## '/api/v1/entries'
