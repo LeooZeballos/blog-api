@@ -17,11 +17,4 @@ public class BlogAppException extends RuntimeException {
         this.message = message;
     }
 
-    public BlogAppException(HttpStatus status, String message, String message1) {
-        super(message);
-        this.status = status;
-        // this.message = message;
-        this.message = message1;
-    }
-
 }

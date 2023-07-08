@@ -2,6 +2,7 @@ package com.leozeballos.blog.controller;
 
 import com.leozeballos.blog.dto.EntryDTO;
 import com.leozeballos.blog.dto.EntryResponse;
+import com.leozeballos.blog.exception.DuplicatedEntryException;
 import com.leozeballos.blog.service.EntryService;
 import com.leozeballos.blog.utility.AppConstants;
 
@@ -9,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -35,20 +35,24 @@ public class EntryController {
         return ResponseEntity.ok(entryService.getEntryById(id));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public ResponseEntity<EntryDTO> saveEntry(@Valid @RequestBody EntryDTO entryDTO) {
-        return new ResponseEntity<>(entryService.newEntry(entryDTO), HttpStatus.CREATED);
+    public ResponseEntity<?> saveEntry(@Valid @RequestBody EntryDTO entryDTO) {
+        try {
+            EntryDTO dto = entryService.newEntry(entryDTO);
+            return ResponseEntity.created(new java.net.URI("/api/" + AppConstants.API_VERSION + "/entries/" + dto.getId())).body(dto);
+        } catch (DuplicatedEntryException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<EntryDTO> updateEntry(@Valid @RequestBody EntryDTO entryDTO, @PathVariable(name = "id") Long id) {
         EntryDTO responseEntry = entryService.updateEntry(entryDTO, id);
         return new ResponseEntity<>(responseEntry, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteEntry(@PathVariable(name = "id") Long id) {
         entryService.deleteEntry(id);

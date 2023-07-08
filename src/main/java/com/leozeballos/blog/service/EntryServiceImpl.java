@@ -3,6 +3,7 @@ package com.leozeballos.blog.service;
 import com.leozeballos.blog.dto.EntryDTO;
 import com.leozeballos.blog.dto.EntryResponse;
 import com.leozeballos.blog.entity.Entry;
+import com.leozeballos.blog.exception.DuplicatedEntryException;
 import com.leozeballos.blog.exception.ResourceNotFoundException;
 import com.leozeballos.blog.repository.EntryRepository;
 
@@ -28,6 +29,12 @@ public class EntryServiceImpl implements EntryService {
     public EntryDTO newEntry(EntryDTO entryDTO) {
         // Map DTO to Entry and save it
         Entry entry = mapDTOtoEntry(entryDTO);
+
+        // Validate if Entry already exists
+        if (entryRepository.existsByTitle(entry.getTitle())) {
+            throw new DuplicatedEntryException("Entry already exists for title: " + entry.getTitle());
+        }
+
         entry = entryRepository.save(entry);
         return mapEntryToDTO(entry);
     }
@@ -43,7 +50,7 @@ public class EntryServiceImpl implements EntryService {
         List<Entry> entryList = entries.getContent();
 
         // Build EntryResponse object and return it
-        EntryResponse entryResponse = EntryResponse.builder()
+        return EntryResponse.builder()
                 .content(entryList.stream().map(this::mapEntryToDTO).collect(java.util.stream.Collectors.toList()))
                 .pageNumber(entries.getNumber())
                 .pageSize(entries.getSize())
@@ -51,7 +58,6 @@ public class EntryServiceImpl implements EntryService {
                 .totalPages(entries.getTotalPages())
                 .hasNext(entries.hasNext())
                 .build();
-        return entryResponse;
     }
 
     @Override

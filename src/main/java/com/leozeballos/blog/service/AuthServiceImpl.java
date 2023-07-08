@@ -1,6 +1,7 @@
 package com.leozeballos.blog.service;
 
 import java.util.Collections;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.security.authentication.AuthenticationManager;
@@ -55,15 +56,20 @@ public class AuthServiceImpl implements AuthService {
         }
 
         // create new user's account
-        Set<Role> role = Collections.singleton(roleRepository.findRoleByName("USER").get());
-        User user = User.builder()
+        Optional<Role> userRole = roleRepository.findRoleByName("USER");
+        if (!userRole.isPresent()) {
+            throw new RuntimeException("Role USER not found!");
+        }
+
+        Set<Role> role = Collections.singleton(userRole.get());
+
+        userRepository.save(User.builder()
                 .name(registerDTO.getName())
                 .username(registerDTO.getUsername())
                 .email(registerDTO.getEmail())
                 .password(passwordEncoder.encode(registerDTO.getPassword()))
                 .roles(role)
-                .build();
-        userRepository.save(user);
+                .build());
 
         // authenticate the user and return the token
         Authentication authentication = authenticationManager.authenticate(
