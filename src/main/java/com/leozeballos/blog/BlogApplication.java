@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 @RestController
-public class ApiRestSpringbootApplication {
+public class BlogApplication {
 
     @Bean
     public ModelMapper modelMapper() {
@@ -31,7 +31,7 @@ public class ApiRestSpringbootApplication {
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(ApiRestSpringbootApplication.class, args);
+        SpringApplication.run(BlogApplication.class, args);
     }
 
 }
