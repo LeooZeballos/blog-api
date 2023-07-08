@@ -44,10 +44,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    @SuppressWarnings("StringOperationCanBeSimplified")
+    /**
+     * Extracts the JWT from the request.
+     *
+     * @param request The request to extract the JWT from
+     * @return The JWT or null if the header is not present or does not start with "Bearer "
+     */
     private String getJwtOfRequest(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
-        return StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ") ? bearerToken.substring(7, bearerToken.length()) : null;
+        return StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ") ? bearerToken.substring(7) : null;
     }
 
 }
