@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.leozeballos</groupId>
-    <artifactId>api-rest-springboot</artifactId>
+    <artifactId>blog</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>api-rest-springboot</name>
     <description>api-rest-springboot</description>
