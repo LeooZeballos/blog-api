@@ -11,8 +11,8 @@
     <groupId>com.leozeballos</groupId>
     <artifactId>blog</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>api-rest-springboot</name>
-    <description>api-rest-springboot</description>
+    <name>blog-api</name>
+    <description>blog-api</description>
     <properties>
         <java.version>8</java.version>
     </properties>
@@ -56,6 +56,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
+            <version>42.3.8</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
