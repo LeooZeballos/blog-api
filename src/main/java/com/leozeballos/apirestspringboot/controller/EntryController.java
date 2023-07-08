@@ -4,7 +4,9 @@ import com.leozeballos.apirestspringboot.dto.EntryDTO;
 import com.leozeballos.apirestspringboot.dto.EntryResponse;
 import com.leozeballos.apirestspringboot.service.EntryService;
 import com.leozeballos.apirestspringboot.utility.AppConstants;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,15 +15,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/" + AppConstants.API_VERSION + "/entries")
 public class EntryController {
 
     private final EntryService entryService;
-
-    @Autowired
-    public EntryController(EntryService entryService) {
-        this.entryService = entryService;
-    }
 
     @GetMapping
     public EntryResponse getAllEntries(

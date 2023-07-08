@@ -55,7 +55,7 @@ public class AuthServiceImpl implements AuthService {
         }
 
         // create new user's account
-        Set<Role> role = Collections.singleton(roleRepository.findRoleByName("user").get());
+        Set<Role> role = Collections.singleton(roleRepository.findRoleByName("USER").get());
         User user = User.builder()
                 .name(registerDTO.getName())
                 .username(registerDTO.getUsername())
