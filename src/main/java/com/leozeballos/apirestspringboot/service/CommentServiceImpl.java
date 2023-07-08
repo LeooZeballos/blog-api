@@ -56,7 +56,7 @@ public class CommentServiceImpl implements CommentService {
     public CommentDTO getCommentById(Long entryId, Long commentId) {
         Entry entry = entryRepository.findById(entryId).orElseThrow(() -> new ResourceNotFoundException("Entry not found", "entryId", entryId));
         Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new ResourceNotFoundException("Comment not found", "commentId", commentId));
-        if (comment.getEntry().getId().equals(entryId)) {
+        if (comment.getEntry().getId().equals(entry.getId())) {
             return mapCommentToDTO(comment);
         } else {
             throw new BlogAppException(HttpStatus.BAD_REQUEST, "The comment does not belong to the entry");
@@ -67,7 +67,7 @@ public class CommentServiceImpl implements CommentService {
     public CommentDTO updateComment(Long entryId, Long commentId, CommentDTO commentDTO) {
         Entry entry = entryRepository.findById(entryId).orElseThrow(() -> new ResourceNotFoundException("Entry not found", "entryId", entryId));
         Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new ResourceNotFoundException("Comment not found", "commentId", commentId));
-        if (comment.getEntry().getId().equals(entryId)) {
+        if (comment.getEntry().getId().equals(entry.getId())) {
             comment.setComment(commentDTO.getComment());
             comment.setTitle(commentDTO.getTitle());
             comment.setEmail(commentDTO.getEmail());
@@ -82,7 +82,7 @@ public class CommentServiceImpl implements CommentService {
     public void deleteComment(Long entryId, Long commentId) {
         Entry entry = entryRepository.findById(entryId).orElseThrow(() -> new ResourceNotFoundException("Entry not found", "entryId", entryId));
         Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new ResourceNotFoundException("Comment not found", "commentId", commentId));
-        if (comment.getEntry().getId().equals(entryId)) {
+        if (comment.getEntry().getId().equals(entry.getId())) {
             commentRepository.delete(comment);
         } else {
             throw new BlogAppException(HttpStatus.BAD_REQUEST, "The comment does not belong to the entry");

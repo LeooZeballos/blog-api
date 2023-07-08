@@ -29,6 +29,7 @@ public class Entry {
 
     @JsonBackReference
     @OneToMany(mappedBy = "entry", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private Set<Comment> comments = new HashSet<>();
 
 }

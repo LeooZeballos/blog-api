@@ -3,8 +3,6 @@ package com.leozeballos.apirestspringboot.service;
 import com.leozeballos.apirestspringboot.dto.EntryDTO;
 import com.leozeballos.apirestspringboot.dto.EntryResponse;
 
-import java.util.List;
-
 public interface EntryService {
     EntryDTO newEntry(EntryDTO entryDTO);
     EntryResponse getAllEntries(int pageNumber, int pageSize, String sortBy, String sortDir);
