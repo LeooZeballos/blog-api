@@ -11,7 +11,25 @@
 
 ## General info
 
-API REST en Spring Boot con JWT, Spring Security, PostgreSQL y Data JPA
+Welcome to my Blog API Rest project! I've had an amazing learning experience while working on this project, where I built a robust and secure blogging platform using various technologies. Let me share what I've learned and implemented:
+
+To begin with, I got hands-on experience with Spring Boot, a fantastic framework that simplifies Java application development. With Spring Boot, I was able to set up the project quickly and effortlessly. It provided preconfigured dependencies and production-ready features, saving me a lot of time and effort.
+
+One of the key aspects I learned was JWT (JSON Web Tokens), an essential authentication mechanism used in modern web applications. I successfully implemented JWT-based authentication and authorization in my API, ensuring secure transmission of user information between the client and the server in the form of JSON objects.
+
+Another technology I delved into was Spring Security. It's an incredibly versatile security framework that helped me handle authentication and access control in my API. I was able to define fine-grained access rules, ensuring that only authenticated users could access specific endpoints.
+
+For data storage, I integrated my API with a PostgreSQL database. PostgreSQL is a powerful and reliable relational database management system. I used Spring Data JPA, a high-level abstraction over the database, to simplify database access and interact with it using object-oriented concepts. This reduced the amount of boilerplate code I had to write.
+
+Throughout the project, I had the opportunity to work with Apache Maven, a popular build automation and dependency management tool. Maven made it easy for me to manage dependencies and build the project effectively.
+
+Furthermore, I explored Docker, a powerful containerization tool. With Docker, I containerized my application and its dependencies, allowing for consistent deployment across different environments. This simplified the setup process and ensured that my application ran smoothly wherever it was deployed.
+
+Documentation and testing were crucial aspects of my project. I used Postman, an excellent API development environment, to test my API endpoints and interact with them seamlessly. Additionally, I integrated Swagger into my API to provide interactive documentation. It made it easy for me to explore the available endpoints, view request/response examples, and understand the functionality of my API.
+
+Last but not least, I managed my codebase using Git, a widely used version control system. Git helped me track changes, collaborate with other developers, and maintain a reliable history of my project.
+
+Overall, this project has been an enriching learning experience. I've gained practical knowledge in developing RESTful APIs with Spring Boot, implementing JWT-based authentication and authorization, integrating with a PostgreSQL database, and leveraging essential tools for documentation and testing.
 
 ## How to Install and Run the Project
 
