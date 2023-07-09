@@ -87,20 +87,20 @@ docker-compose up -d
 
 ## Features
 
-| Endpoint                              | Method | Description                            | Parameters                          | Role  |
-|---------------------------------------|--------|----------------------------------------|-------------------------------------|-------|
-| /api/v1/auth/login                    | POST   | Login to get a bearer token            | usernameOrEmail, password           | ANY   |
-| /api/v1/auth/register                 | POST   | Register a user                        | name, username, email, password     | ANY   |
-| /api/v1/entries                       | GET    | List all entries                       | pageNumber, pageSize, sortBy, sortDir| ANY   |
-| ^                                     | POST   | Create a new entry                     | title, description, content         | ADMIN |
-| /api/v1/entries/{entryId}             | GET    | Get an entry by ID                     |                                     | ANY   |
-| ^                                     | PUT    | Update an entry by ID                  | title, description, content         | ADMIN |
-| ^                                     | DELETE | Delete an entry by ID                  |                                     | ADMIN |
-| /api/v1/entries/{entryId}/comments    | GET    | List all comments for an entry         |                                     | ANY   |
-| ^                                     | POST   | Create a new comment for an entry      | title, email, comment               | ANY   |
-| /api/v1/entries/{entryId} /comments/{commentId} | GET    | Get a comment by comment ID and entry ID |                                     | ANY   |
-| ^                                     | PUT    | Update a comment by comment ID and entry ID | title, email, comment               | ANY   |
-| ^                                     | DELETE | Delete a comment by comment ID and entry ID |                                     | ANY   |
+| Method | Endpoint                                       | Description                                 | Parameters                                      | Role  |
+|--------|------------------------------------------------|---------------------------------------------|-------------------------------------------------|-------|
+| POST   | /api/v1/auth/login                             | Login to get a bearer token                 | usernameOrEmail, password                       | ANY   |
+| POST   | /api/v1/auth/register                          | Register a user                             | name, username, email, password                 | ANY   |
+| GET    | /api/v1/entries                                | List all entries                            | [pageNumber], [pageSize], [sortBy], [sortDir]   | ANY   |
+| POST   | /api/v1/entries                                | Create a new entry                          | title, description, content                     | ADMIN |
+| GET    | /api/v1/entries/{entryId}                      | Get an entry by ID                          | entryId                                         | ANY   |
+| PUT    | /api/v1/entries/{entryId}                      | Update an entry by ID                       | entryId, title, description, content            | ADMIN |
+| DELETE | /api/v1/entries/{entryId}                      | Delete an entry by ID                       | entryId                                         | ADMIN |
+| GET    | /api/v1/entries/{entryId}/comments             | List all comments for an entry              | entryId                                         | ANY   |
+| POST   | /api/v1/entries/{entryId}/comments             | Create a new comment for an entry           | entryId, title, email, comment                  | ANY   |
+| GET    | /api/v1/entries/{entryId}/comments/{commentId} | Get a comment by comment ID and entry ID    | entryId, commentId                              | ANY   |
+| PUT    | /api/v1/entries/{entryId}/comments/{commentId} | Update a comment by comment ID and entry ID | entryId, commentId, title, email, comment       | ANY   |
+| DELETE | /api/v1/entries/{entryId}/comments/{commentId} | Delete a comment by comment ID and entry ID | entryId, commentId                              | ANY   |
 
 ## License
 
