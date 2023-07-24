@@ -1,25 +1,32 @@
-# Use a multi-stage build for smaller final image
-# Stage 1: Build stage
-FROM maven:3.8.4-openjdk-8-slim AS build
+# Use a base image with JDK 17 and Maven
+FROM maven:3.8.3-openjdk-17-slim AS build
+
+# Set the working directory in the container
 WORKDIR /app
 
-# Copy and install dependencies
+# Copy the Maven project file
 COPY pom.xml .
+
+# Download the project dependencies
 RUN mvn dependency:go-offline -B
 
-# Copy the source code and build the application
+# Copy the source code
 COPY src ./src
+
+# Build the application
 RUN mvn package -DskipTests
 
-# Stage 2: Final stage
-FROM openjdk:8-jre-alpine
+# Create a new stage using the base JDK 17 image
+FROM openjdk:17-jdk
+
+# Set the working directory in the container
 WORKDIR /app
 
-# Copy the JAR file from the build stage
+# Copy the built JAR file from the build stage
 COPY --from=build /app/target/*.jar app.jar
 
-# Expose the port
+# Expose the port on which your Spring Boot application listens
 EXPOSE 8080
 
-# Run the application with the "docker" profile
-ENTRYPOINT ["java", "-Dspring.profiles.active=docker", "-jar", "app.jar"]
+# Define the command to run the application
+CMD ["java", "-jar", "-Dspring.profiles.active=docker", "app.jar"]
